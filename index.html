@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive CV Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">CV Builder</h1>
+            <p class="text-gray-600 mt-2">Create your professional resume in minutes.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Form Section -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-6 border-b pb-3">Your Information</h2>
+
+                <!-- 1. Personal Information -->
+                <div id="personal-info-section" class="space-y-4 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-700">Personal Information</h3>
+                    <div>
+                        <label for="full-name" class="block text-sm font-medium text-gray-600">Full Name</label>
+                        <input type="text" id="full-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., John Doe">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
+                        <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., john.doe@example.com">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
+                        <input type="tel" id="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., +1 234 567 890">
+                    </div>
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-600">Address</label>
+                        <input type="text" id="address" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., City, Country">
+                    </div>
+                    <div>
+                        <label for="profile-picture" class="block text-sm font-medium text-gray-600">Profile Picture</label>
+                        <input type="file" id="profile-picture" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+                    </div>
+                </div>
+
+                <!-- 2. Educational Information -->
+                <div id="education-section" class="mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Educational Information</h3>
+                        <button onclick="addEntry('education-entries', 'education')" class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors">Add</button>
+                    </div>
+                    <div id="education-entries" class="space-y-4">
+                        <!-- Dynamic education entries will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- 3. Work Experience -->
+                <div id="experience-section" class="mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Work Experience</h3>
+                        <button onclick="addEntry('experience-entries', 'experience')" class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors">Add</button>
+                    </div>
+                    <div id="experience-entries" class="space-y-4">
+                        <!-- Dynamic experience entries will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- 4. Skills -->
+                <div id="skills-section" class="mb-8">
+                     <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Skills</h3>
+                         <button onclick="addEntry('skills-entries', 'skill')" class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors">Add</button>
+                    </div>
+                    <div id="skills-entries" class="space-y-4">
+                        <!-- Dynamic skills entries will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- 5. Languages -->
+                <div id="languages-section" class="mb-8">
+                     <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Languages</h3>
+                         <button onclick="addEntry('languages-entries', 'language')" class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors">Add</button>
+                    </div>
+                    <div id="languages-entries" class="space-y-4">
+                        <!-- Dynamic languages entries will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- 6. References -->
+                <div id="references-section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">References</h3>
+                         <button onclick="addEntry('references-entries', 'reference')" class="bg-indigo-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors">Add</button>
+                    </div>
+                    <div id="references-entries" class="space-y-4">
+                        <!-- Dynamic references entries will be inserted here -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CV Preview Section -->
+            <div id="cv-preview-container" class="bg-white p-8 rounded-lg shadow-lg relative">
+                <button id="print-btn" onclick="window.print()" class="absolute top-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Print / Save as PDF
+                </button>
+                <div id="cv-preview">
+                    <!-- Header -->
+                    <div class="text-center mb-8 flex flex-col items-center">
+                         <img id="cv-profile-picture" src="https://placehold.co/120x120/E2E8F0/A0AEC0?text=Photo" alt="Profile Picture" class="w-32 h-32 rounded-full mb-4 object-cover border-4 border-gray-200">
+                        <h1 id="cv-full-name" class="text-4xl font-bold text-gray-800">John Doe</h1>
+                        <div class="flex justify-center items-center space-x-4 mt-2 text-sm text-gray-600">
+                            <span id="cv-email">john.doe@example.com</span>
+                            <span class="border-l border-gray-400 h-4"></span>
+                            <span id="cv-phone">+1 234 567 890</span>
+                             <span class="border-l border-gray-400 h-4"></span>
+                            <span id="cv-address">City, Country</span>
+                        </div>
+                    </div>
+
+                    <!-- Education Preview -->
+                    <div id="cv-education-section" class="mb-6">
+                        <h2 class="cv-section-title">Education</h2>
+                        <div id="cv-education-list"></div>
+                    </div>
+
+                    <!-- Experience Preview -->
+                    <div id="cv-experience-section" class="mb-6">
+                        <h2 class="cv-section-title">Work Experience</h2>
+                        <div id="cv-experience-list"></div>
+                    </div>
+                    
+                    <!-- Skills & Languages Preview -->
+                    <div class="grid grid-cols-2 gap-8 mb-6">
+                        <!-- Skills Preview -->
+                        <div id="cv-skills-section">
+                            <h2 class="cv-section-title">Skills</h2>
+                            <ul id="cv-skills-list" class="list-disc list-inside text-gray-700 space-y-1"></ul>
+                        </div>
+
+                        <!-- Languages Preview -->
+                        <div id="cv-languages-section">
+                            <h2 class="cv-section-title">Languages</h2>
+                            <ul id="cv-languages-list" class="list-disc list-inside text-gray-700 space-y-1"></ul>
+                        </div>
+                    </div>
+
+
+                    <!-- References Preview -->
+                    <div id="cv-references-section">
+                        <h2 class="cv-section-title">References</h2>
+                        <div id="cv-references-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+</body>
+</html>
