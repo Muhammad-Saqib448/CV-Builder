@@ -1,22 +1,25 @@
- document.addEventListener('DOMContentLoaded', () => {
-            // Add initial entries for each section to guide the user
+document.addEventListener('DOMContentLoaded', () => {
             addEntry('education-entries', 'education');
             addEntry('experience-entries', 'experience');
             addEntry('skills-entries', 'skill');
             addEntry('languages-entries', 'language');
             addEntry('references-entries', 'reference');
-            
-            // Set up event listeners for all form elements
             setupEventListeners();
         });
 
         function setupEventListeners() {
-            // Listen for any input change on the form to update the preview
-            const form = document.querySelector('.bg-white.p-6');
+            const form = document.getElementById('cv-form');
             form.addEventListener('input', updatePreview);
-
-            // Special listener for file input
             document.getElementById('profile-picture').addEventListener('change', updateProfilePicture);
+        }
+        
+        function validateAndPrint() {
+            const form = document.getElementById('cv-form');
+            if (form.checkValidity()) {
+                window.print();
+            } else {
+                form.reportValidity(); // Shows validation messages on failed fields
+            }
         }
 
         function updateProfilePicture(event) {
@@ -39,52 +42,57 @@
             switch(type) {
                 case 'education':
                     content = `
-                        <button onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Degree/Certificate">
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Institution/University">
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Graduation Year">
+                        <button type="button" onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Degree/Certificate" required>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Institution/University" required>
+                        <div class="grid grid-cols-2 gap-2">
+                           <input type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Year" required min="1950" max="2099">
+                           <input type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="GPA (e.g., 3.8)" step="0.01" min="0.0" max="4.0" title="Enter a GPA between 0.0 and 4.0">
+                        </div>
                     `;
                     break;
                 case 'experience':
                     content = `
-                        <button onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Job Title">
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Company">
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Dates (e.g., Jan 2020 - Present)">
-                        <textarea class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Responsibilities and Achievements" rows="3"></textarea>
+                        <button type="button" onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Job Title" required>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Company" required>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Dates (e.g., Jan 2020 - Present)" required>
+                        <textarea class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Responsibilities and Achievements" rows="3" required></textarea>
                     `;
                     break;
                 case 'skill':
                      content = `
-                        <div class="flex items-center">
-                            <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="e.g., JavaScript">
-                            <button onclick="removeEntry(this)" class="ml-2 text-red-500 hover:text-red-700 font-bold">X</button>
+                        <div class="flex items-center entry-item">
+                            <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="e.g., JavaScript" required>
+                            <button type="button" onclick="removeEntry(this)" class="ml-2 text-red-500 hover:text-red-700 font-bold">X</button>
                         </div>
                     `;
+                    entryDiv.className = ''; // Remove default padding for this type
                     break;
                 case 'language':
                     content = `
-                        <div class="flex items-center">
-                            <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="e.g., English (Fluent)">
-                            <button onclick="removeEntry(this)" class="ml-2 text-red-500 hover:text-red-700 font-bold">X</button>
+                        <div class="flex items-center entry-item">
+                            <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="e.g., English (Fluent)" required>
+                            <button type="button" onclick="removeEntry(this)" class="ml-2 text-red-500 hover:text-red-700 font-bold">X</button>
                         </div>
                     `;
+                    entryDiv.className = '';
                     break;
                  case 'reference':
                     content = `
-                        <button onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Reference Name">
-                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Contact Information">
+                        <button type="button" onclick="removeEntry(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold">X</button>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 mb-2 text-sm" placeholder="Reference Name" required>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm" placeholder="Contact Information" required>
                     `;
                     break;
             }
             entryDiv.innerHTML = content;
             container.appendChild(entryDiv);
-            updatePreview(); // Update preview after adding a new field
+            updatePreview(); 
         }
 
         function removeEntry(button) {
-            button.closest('.entry-item, .flex').remove();
+            button.closest('.entry-item').remove();
             updatePreview();
         }
 
@@ -103,12 +111,14 @@
                 const degree = inputs[0].value;
                 const institution = inputs[1].value;
                 const year = inputs[2].value;
+                const gpa = inputs[3].value;
                 if (degree || institution || year) {
+                    const gpaText = gpa ? ` &bull; GPA: ${gpa}` : '';
                     educationList.innerHTML += `
                         <div class="mb-3">
                             <h3 class="font-semibold text-md text-gray-800">${degree || 'Degree'}</h3>
                             <p class="text-sm text-gray-600">${institution || 'Institution'}</p>
-                            <p class="text-sm text-gray-500">${year || 'Year'}</p>
+                            <p class="text-sm text-gray-500">${year || 'Year'}${gpaText}</p>
                         </div>
                     `;
                 }
@@ -137,20 +147,14 @@
             const skillsList = document.getElementById('cv-skills-list');
             skillsList.innerHTML = '';
             document.querySelectorAll('#skills-entries input').forEach(input => {
-                const skill = input.value;
-                if (skill) {
-                    skillsList.innerHTML += `<li>${skill}</li>`;
-                }
+                if (input.value) skillsList.innerHTML += `<li>${input.value}</li>`;
             });
 
             // Languages
             const languagesList = document.getElementById('cv-languages-list');
             languagesList.innerHTML = '';
             document.querySelectorAll('#languages-entries input').forEach(input => {
-                const language = input.value;
-                if (language) {
-                    languagesList.innerHTML += `<li>${language}</li>`;
-                }
+                if (input.value) languagesList.innerHTML += `<li>${input.value}</li>`;
             });
             
              // References
@@ -170,4 +174,3 @@
                 }
             });
         }
-    

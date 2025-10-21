@@ -16,6 +16,16 @@ body {
             font-weight: 600;
             color: #1a202c;
         }
+        
+        /* Styles for input validation */
+        input:invalid, textarea:invalid {
+            border-color: #f87171; /* red-400 */
+        }
+        input:invalid:focus, textarea:invalid:focus {
+            --tw-ring-color: #f87171; /* red-400 */
+            border-color: #f87171; /* red-400 */
+        }
+
         /* Print-specific styles */
         @media print {
             body * {
